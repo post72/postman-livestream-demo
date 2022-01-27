@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: Exploratory Demo API
+  version: 0.0.1
+  description: Simple API to demo the API Builder in Postman
+  contact:
+    name: Arlemi Turpault
+    email: arlemi@postman.com
+servers:
+  - url: http://localhost:3000
+    description: Demo API
+paths:
+  /videos/all:
+    get:
+      operationId: allVideos
+      summary: List all videos
+      description: Returns a list of all the Exploratory videos
+      tags:
+        - videos
+      responses:
+        '200':
+          description: List of videos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/video"
+  /videos/{videoId}:
+    get:
+      operationId: oneVideo
+      summary: Fetch one video by ID 
+      description: Get a single video
+      tags:
+        - videos
+      parameters:
+      - name: videoId
+        in: path
+        required: true
+        schema:
+          type: number
+          example: 4
+
+      responses:
+        '200':
+          description: List of videos
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/video"
+
+components:
+  schemas:
+    video:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Video title
+          example: "Public Workspaces"
+        url:
+          type: string
+          description: Video URL
+          example: "https://www.youtube.com/watch?v=DjGbMdqnY64"
+        views:
+          type: number
+          description: Number of views
+          example: 7483
+
+tags:
+  - name: videos
+    description: API returning info about Exploratory videos
